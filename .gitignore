@@ -9,3 +9,6 @@ coverage.out
 *.secret.yml
 *.log
 .DS_Store
+.agents/
+.specify/
+specs/
