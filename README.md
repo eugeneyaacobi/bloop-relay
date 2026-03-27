@@ -46,6 +46,12 @@ Release workflow behavior:
   - `ghcr.io/<owner>/bloop-relay:<tag>`
   - `docker.io/<dockerhub-user>/bloop-relay:<tag>`
 
+Versioning / release policy:
+- tags use semver: `vMAJOR.MINOR.PATCH`
+- current default automation starts at `v0.1.0`
+- every successful CI run on `main` automatically creates the next patch release
+- example progression: `v0.1.0`, `v0.1.1`, `v0.1.2`
+
 ## Local relay/client ingest integration
 
 For local end-to-end dev proofing, this repo includes:
