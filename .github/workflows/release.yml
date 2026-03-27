@@ -77,3 +77,25 @@ jobs:
             ghcr.io/${{ steps.owner.outputs.value }}/bloop-relay:latest
             docker.io/${{ steps.dockerhub.outputs.username }}/bloop-relay:${{ github.ref_name }}
             docker.io/${{ steps.dockerhub.outputs.username }}/bloop-relay:latest
+
+  update-dockerhub-description:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'release' || github.event_name == 'workflow_dispatch'
+    steps:
+      - uses: actions/checkout@v4
+      - name: Resolve Docker Hub namespace
+        id: dockerhub
+        env:
+          DOCKERHUB_USERNAME: ${{ vars.DOCKERHUB_USERNAME }}
+          REPO_OWNER: ${{ github.repository_owner }}
+        run: |
+          USERNAME="$DOCKERHUB_USERNAME"
+          if [ -z "$USERNAME" ]; then USERNAME="$REPO_OWNER"; fi
+          echo "username=${USERNAME,,}" >> "$GITHUB_OUTPUT"
+      - name: Update Docker Hub description
+        uses: peter-evans/dockerhub-description@v5
+        with:
+          username: ${{ steps.dockerhub.outputs.username }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+          repository: ${{ steps.dockerhub.outputs.username }}/bloop-relay
+          short-description: ${{ github.event.repository.description }}
