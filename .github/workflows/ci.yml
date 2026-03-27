@@ -2,7 +2,7 @@ name: bloop-tunnel-ci
 
 on:
   push:
-    branches: [ main, master, rook/** ]
+    branches: [ main, develop, master, rook/** ]
   pull_request:
 
 jobs:
