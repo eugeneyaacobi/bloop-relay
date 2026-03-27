@@ -1,0 +1,13 @@
+domain: bloop.to
+listen_addr: ":8080"
+trusted_proxies:
+  - 127.0.0.1/32
+client_tokens:
+  - name: laptop-main
+    token_env: BLOOP_CLIENT_TOKEN
+hostname_generation:
+  mode: random
+  length: 8
+logging:
+  level: info
+  format: json

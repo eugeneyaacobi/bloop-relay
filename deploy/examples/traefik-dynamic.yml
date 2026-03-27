@@ -1,0 +1,14 @@
+http:
+  routers:
+    bloop-tunnel:
+      rule: "HostRegexp(`{subdomain:[a-z0-9-]+}.bloop.to`)"
+      service: bloop-relay
+      entryPoints:
+        - websecure
+      tls: {}
+
+  services:
+    bloop-relay:
+      loadBalancer:
+        servers:
+          - url: "http://127.0.0.1:8080"

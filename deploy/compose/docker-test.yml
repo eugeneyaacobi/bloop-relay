@@ -1,0 +1,48 @@
+services:
+  echo:
+    image: python:3.13-slim
+    working_dir: /app
+    command:
+      - python
+      - -c
+      - |
+        from http.server import BaseHTTPRequestHandler, HTTPServer
+        class Handler(BaseHTTPRequestHandler):
+            def _write_response(self, payload):
+                self.send_response(200)
+                self.send_header("Content-Type", "text/plain; charset=utf-8")
+                self.send_header("Content-Length", str(len(payload)))
+                self.end_headers()
+                self.wfile.write(payload)
+            def do_GET(self):
+                body = f"echo GET {self.path}\n".encode()
+                self._write_response(body)
+            def do_POST(self):
+                length = int(self.headers.get("Content-Length", "0"))
+                body = self.rfile.read(length)
+                response = b"echo POST " + self.path.encode() + b"\n" + body
+                self._write_response(response)
+            def log_message(self, format, *args):
+                pass
+        HTTPServer(("0.0.0.0", 19090), Handler).serve_forever()
+
+  relay:
+    build:
+      context: ../..
+      dockerfile: deploy/docker/relay.Dockerfile
+    command: ["--config", "/config/relay.yaml"]
+    volumes:
+      - ../examples/relay.docker.local.yaml:/config/relay.yaml:ro
+    ports:
+      - "38080:8080"
+
+  client:
+    build:
+      context: ../..
+      dockerfile: deploy/docker/client.Dockerfile
+    command: ["--config", "/config/client.yaml"]
+    depends_on:
+      - relay
+      - echo
+    volumes:
+      - ../examples/client.docker.local.yaml:/config/client.yaml:ro

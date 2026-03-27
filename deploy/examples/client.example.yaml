@@ -1,0 +1,13 @@
+relay_url: ws://localhost:8080/connect
+auth_token_env: BLOOP_CLIENT_TOKEN
+reconnect:
+  initial_delay_ms: 1000
+  max_delay_ms: 30000
+logging:
+  level: info
+  format: json
+tunnels:
+  - name: app
+    hostname: app.bloop.to
+    local_addr: host.docker.internal:3000
+    access: public

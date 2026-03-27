@@ -1,0 +1,39 @@
+services:
+  bloop-relay:
+    build:
+      context: /root/.openclaw/workspace/bloop-tunnel
+      dockerfile: deploy/docker/relay.Dockerfile
+    entrypoint: ["/bloop-relay", "-config", "/config/relay.local.yaml"]
+    volumes:
+      - /root/.openclaw/workspace/bloop-tunnel/deploy/examples/relay.local.yaml:/config/relay.local.yaml:ro
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    networks:
+      - relay-ingest
+    ports:
+      - "18080:8080"
+
+  echo-server:
+    image: python:3.11-alpine
+    command: ["python", "-m", "http.server", "19090", "--bind", "0.0.0.0"]
+    networks:
+      - relay-ingest
+
+  bloop-client:
+    build:
+      context: /root/.openclaw/workspace/bloop-tunnel
+      dockerfile: deploy/docker/client.Dockerfile
+    entrypoint: ["/bloop-client", "-config", "/config/client.relay-ingest.yaml"]
+    volumes:
+      - ${BLOOP_CLIENT_RENDERED_CONFIG:-/root/.openclaw/workspace/bloop-tunnel/deploy/examples/client.relay-ingest.yaml}:/config/client.relay-ingest.yaml:ro
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    depends_on:
+      - bloop-relay
+      - echo-server
+    networks:
+      - relay-ingest
+
+networks:
+  relay-ingest:
+    name: relay-ingest
