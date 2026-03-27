@@ -45,6 +45,7 @@ Release workflow behavior:
 - publishes the public container image to both GHCR and Docker Hub:
   - `ghcr.io/<owner>/bloop-relay:<tag>`
   - `docker.io/<dockerhub-user>/bloop-relay:<tag>`
+- Docker publishing uses `docker/build-push-action` with explicit multi-registry tags for more reliable GHCR + Docker Hub publication
 
 Versioning / release policy:
 - tags use semver: `vMAJOR.MINOR.PATCH`

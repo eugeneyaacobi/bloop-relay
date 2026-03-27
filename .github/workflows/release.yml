@@ -40,6 +40,7 @@ jobs:
 
   publish-images:
     runs-on: ubuntu-latest
+    if: github.event_name == 'release' || github.event_name == 'workflow_dispatch'
     steps:
       - uses: actions/checkout@v4
       - uses: docker/setup-buildx-action@v3
@@ -64,13 +65,15 @@ jobs:
       - name: Lowercase repo owner
         id: owner
         run: echo "value=${GITHUB_REPOSITORY_OWNER,,}" >> "$GITHUB_OUTPUT"
-      - name: Build and push public bloop-relay image
-        run: |
-          docker buildx build \
-            --push \
-            --platform linux/amd64,linux/arm64 \
-            -t ghcr.io/${{ steps.owner.outputs.value }}/bloop-relay:${{ github.ref_name }} \
-            -t ghcr.io/${{ steps.owner.outputs.value }}/bloop-relay:latest \
-            -t docker.io/${{ steps.dockerhub.outputs.username }}/bloop-relay:${{ github.ref_name }} \
-            -t docker.io/${{ steps.dockerhub.outputs.username }}/bloop-relay:latest \
-            -f deploy/docker/client.Dockerfile .
+      - name: Build and push bloop-relay image to GHCR and Docker Hub
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: deploy/docker/client.Dockerfile
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: |
+            ghcr.io/${{ steps.owner.outputs.value }}/bloop-relay:${{ github.ref_name }}
+            ghcr.io/${{ steps.owner.outputs.value }}/bloop-relay:latest
+            docker.io/${{ steps.dockerhub.outputs.username }}/bloop-relay:${{ github.ref_name }}
+            docker.io/${{ steps.dockerhub.outputs.username }}/bloop-relay:latest
