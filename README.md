@@ -49,8 +49,9 @@ Release workflow behavior:
 Versioning / release policy:
 - tags use semver: `vMAJOR.MINOR.PATCH`
 - current default automation starts at `v0.1.0`
-- every successful CI run on `main` automatically creates the next patch release
-- example progression: `v0.1.0`, `v0.1.1`, `v0.1.2`
+- every successful CI run on `develop` automatically creates the next prerelease tag (`v0.1.1-rc.1`, etc.)
+- every successful CI run on `main` automatically creates the next stable patch release
+- recommended flow: feature branch -> PR to `develop` -> validate prerelease -> promote to `main`
 
 ## Local relay/client ingest integration
 
