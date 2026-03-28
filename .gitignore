@@ -1,3 +1,6 @@
+.claude/
+.agents/
+.specify/
 dist/
 *.local.yaml
 .env
