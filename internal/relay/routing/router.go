@@ -1,6 +1,6 @@
 package routing
 
-import "bloop-tunnel/internal/relay/registry"
+import "bloop-relay/internal/relay/registry"
 
 type Router struct {
 	registry *registry.Registry

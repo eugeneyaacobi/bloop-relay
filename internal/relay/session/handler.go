@@ -8,11 +8,11 @@ import (
 	"strings"
 	"time"
 
-	"bloop-tunnel/internal/auth"
-	"bloop-tunnel/internal/config"
-	"bloop-tunnel/internal/generator"
-	"bloop-tunnel/internal/protocol"
-	"bloop-tunnel/internal/relay/registry"
+	"bloop-relay/internal/shared/auth"
+	"bloop-relay/internal/shared/config"
+	"bloop-relay/internal/shared/generator"
+	"bloop-relay/internal/shared/protocol"
+	"bloop-relay/internal/relay/registry"
 
 	"github.com/gorilla/websocket"
 )

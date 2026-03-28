@@ -8,14 +8,14 @@ import (
 	"os"
 	"time"
 
-	"bloop-tunnel/internal/config"
-	"bloop-tunnel/internal/logging"
-	"bloop-tunnel/internal/relay"
-	"bloop-tunnel/internal/relay/registry"
-	"bloop-tunnel/internal/relay/routing"
-	"bloop-tunnel/internal/relay/session"
-	"bloop-tunnel/internal/runtimeingest"
-	"bloop-tunnel/pkg/version"
+	"bloop-relay/internal/shared/config"
+	"bloop-relay/internal/shared/logging"
+	"bloop-relay/internal/relay"
+	"bloop-relay/internal/relay/registry"
+	"bloop-relay/internal/relay/routing"
+	"bloop-relay/internal/relay/session"
+	"bloop-relay/internal/shared/runtimeingest"
+	"bloop-relay/pkg/version"
 )
 
 func main() {

@@ -1,4 +1,4 @@
-module bloop-tunnel
+module bloop-relay
 
 go 1.24.0
 

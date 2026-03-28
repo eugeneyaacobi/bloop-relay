@@ -11,8 +11,8 @@ import (
 	"sync"
 	"time"
 
-	"bloop-tunnel/internal/protocol"
-	"bloop-tunnel/internal/relay/session"
+	"bloop-relay/internal/shared/protocol"
+	"bloop-relay/internal/relay/session"
 )
 
 type pendingResponse struct {

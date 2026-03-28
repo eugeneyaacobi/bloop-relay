@@ -3,8 +3,8 @@ package relay
 import (
 	"net/http"
 
-	"bloop-tunnel/internal/relay/access"
-	"bloop-tunnel/internal/relay/routing"
+	"bloop-relay/internal/relay/access"
+	"bloop-relay/internal/relay/routing"
 )
 
 type HTTPHandler struct {
@@ -21,7 +21,7 @@ func (h *HTTPHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 	if status, msg, allowed := access.EnforceTunnel(r, tunnel); !allowed {
 		if status == http.StatusUnauthorized && access.ResolveMode(tunnel.Access) == access.ModeBasicAuth {
-			w.Header().Set("WWW-Authenticate", `Basic realm="bloop-tunnel"`)
+			w.Header().Set("WWW-Authenticate", `Basic realm="bloop-relay"`)
 		}
 		http.Error(w, msg, status)
 		return

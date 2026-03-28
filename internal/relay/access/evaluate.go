@@ -6,7 +6,7 @@ import (
 	"net/http"
 	"strings"
 
-	"bloop-tunnel/internal/relay/registry"
+	"bloop-relay/internal/relay/registry"
 )
 
 func EnforceTunnel(r *http.Request, tunnel registry.Tunnel) (int, string, bool) {

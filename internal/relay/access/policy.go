@@ -1,6 +1,6 @@
 package access
 
-import "bloop-tunnel/internal/config"
+import "bloop-relay/internal/shared/config"
 
 type Mode string
 

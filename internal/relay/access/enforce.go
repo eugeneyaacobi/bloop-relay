@@ -7,7 +7,7 @@ import (
 	"os"
 	"strings"
 
-	"bloop-tunnel/internal/config"
+	"bloop-relay/internal/shared/config"
 )
 
 func Enforce(r *http.Request, tunnel config.TunnelConfig) (int, string, bool) {

@@ -1,6 +1,6 @@
 # VPS Deployment Notes
 
-This document summarizes the intended first production-style deployment for bloop-tunnel.
+This document summarizes the intended first production-style deployment for `bloop-relay`.
 
 ## Recommended Stack
 
